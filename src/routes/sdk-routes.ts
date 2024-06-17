@@ -1,6 +1,6 @@
 import type { Router } from 'express';
 import { createRouter } from '@/utils/create';
-import { handelGetBalance, handelGetSPLTokenBalance, handelGetSolBalance, handleGetSdkWidgetById } from '@/controllers/skd-controllers';
+import { handelGetBalance, handelGetSPLTokenBalance, handelGetSolBalance, handleGetSdkWidgetById } from '@/controllers/sdk-controllers';
 
 export default createRouter((router: Router) => {
   router.get('/widget/:id', handleGetSdkWidgetById);

@@ -27,7 +27,7 @@ export const handelGetSPLTokenBalance = createHandler(widgetIdParamsSchema, asyn
   const balance = await getSPLTokenBalance(id);
   if (!balance)
     throw new BackendError('NOT_FOUND');
-  res.status(200).json({ balance });
+  res.status(200).json({ balance: balance.value.uiAmount });
 });
 
 export const handelGetSolBalance = createHandler(widgetIdParamsSchema, async (req, res) => {
