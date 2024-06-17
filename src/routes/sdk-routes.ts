@@ -5,6 +5,6 @@ import { handelGetBalance, handelGetSPLTokenBalance, handelGetSolBalance, handle
 export default createRouter((router: Router) => {
   router.get('/widget/:id', handleGetSdkWidgetById);
   router.get('/wallet/balance/:id', handelGetBalance);
-  router.get('/wallet/spl-token/:tokenAddress/balance/:id', handelGetSPLTokenBalance);
+  router.get('/wallet/spl-token/:tokenAddress/balance/:splTokenAddress', handelGetSPLTokenBalance);
   router.get('/wallet/sol/balance/:id', handelGetSolBalance);
 });
