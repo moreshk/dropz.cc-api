@@ -4,6 +4,6 @@ import { createRouter } from '@/utils/create';
 import { handelGetBalance, handleGetSdkWidgetById } from '@/controllers/skd-controllers';
 
 export default createRouter((router: Router) => {
-  router.get('/widget/:id', authenticate(), handleGetSdkWidgetById);
-  router.get('/wallet/:id', authenticate(), handelGetBalance);
+  router.get('/widget/:id', handleGetSdkWidgetById);
+  router.get('/wallet/balance/:id', handelGetBalance);
 });
