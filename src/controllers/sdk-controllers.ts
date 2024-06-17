@@ -35,5 +35,5 @@ export const handelGetSolBalance = createHandler(widgetIdParamsSchema, async (re
   const balance = await getSolBalance(id);
   if (!balance)
     throw new BackendError('NOT_FOUND');
-  res.status(200).json({ balance });
+  res.status(200).json({ ...balance });
 });
