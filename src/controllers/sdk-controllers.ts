@@ -1,5 +1,5 @@
 import { widgetIdParamsSchema } from '@/schema/widgets';
-import { getBalance, getSPLTokenBalance, getSolBalance } from '@/services/sdk-services';
+import { getBalance, getSPLTokenBalance, getSolBalance, splTokenBalanceSchema } from '@/services/sdk-services';
 import { getAllTokens } from '@/services/token-services';
 import { getWidgetById } from '@/services/widget-services';
 import { createHandler } from '@/utils/create';
@@ -22,12 +22,12 @@ export const handelGetBalance = createHandler(widgetIdParamsSchema, async (req, 
   res.status(200).json({ balance });
 });
 
-export const handelGetSPLTokenBalance = createHandler(widgetIdParamsSchema, async (req, res) => {
-  const { id } = req.params;
-  const balance = await getSPLTokenBalance(id);
+export const handelGetSPLTokenBalance = createHandler(splTokenBalanceSchema, async (req, res) => {
+  const { splTokenAddress, tokenAddress } = req.params;
+  const balance = await getSPLTokenBalance(splTokenAddress, tokenAddress);
   if (!balance)
     throw new BackendError('NOT_FOUND');
-  res.status(200).json({ balance: balance.value.uiAmount });
+  res.status(200).json({ ...balance });
 });
 
 export const handelGetSolBalance = createHandler(widgetIdParamsSchema, async (req, res) => {

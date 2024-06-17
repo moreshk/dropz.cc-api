@@ -2,6 +2,7 @@ import type { Buffer } from 'node:buffer';
 import { PublicKey } from '@solana/web3.js';
 import type { AccountInfo, ParsedAccountData } from '@solana/web3.js';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { z } from 'zod';
 import { connection } from '@/utils/connection';
 import { solToken } from '@/utils/defaultTokens';
 import 'dotenv/config';
@@ -79,13 +80,50 @@ export async function getBalance(id: string) {
   }
 }
 
-export async function getSPLTokenBalance(walletSPLTokenAddress: string) {
+export const splTokenBalanceSchema = z.object({
+  params: z.object({
+    tokenAddress: z.string(),
+    splTokenAddress: z.string(),
+  }),
+});
+
+export async function getSPLTokenBalance(walletSPLTokenAddress: string, tokenAddress: string) {
   const address = new PublicKey(walletSPLTokenAddress);
   const balance = await connection.getTokenAccountBalance(address);
-  return balance;
+  const response = await fetch(
+      `https://public-api.birdeye.so/defi/price?address=${tokenAddress}`,
+      {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'X-API-KEY': '6b234866de0740509b9c0eef83e97119',
+        },
+      },
+  );
+  const { data } = await response.json() as { data: Price };
+  const price = data.value;
+  return { balance, price };
 }
 
 export async function getSolBalance(walletAddress: string) {
   const balance = await connection.getBalance(new PublicKey(walletAddress));
-  return balance;
+  const response = await fetch(
+      `https://public-api.birdeye.so/defi/price?address=${solToken}`,
+      {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'X-API-KEY': '6b234866de0740509b9c0eef83e97119',
+        },
+      },
+  );
+  const { data } = await response.json() as { data: Price };
+  const price = data.value;
+  return { balance, price };
+}
+
+interface Price {
+  value: number;
+  updateUnixTime: number;
+  updateHumanTime: string;
 }
