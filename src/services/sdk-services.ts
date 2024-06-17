@@ -2,9 +2,9 @@ import type { Buffer } from 'node:buffer';
 import { PublicKey } from '@solana/web3.js';
 import type { AccountInfo, ParsedAccountData } from '@solana/web3.js';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { z } from 'zod';
 import { connection } from '@/utils/connection';
 import { solToken } from '@/utils/defaultTokens';
+import 'dotenv/config';
 
 export interface TokenPrice {
   [key: string]: {
