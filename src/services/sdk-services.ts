@@ -102,7 +102,7 @@ export async function getSPLTokenBalance(walletSPLTokenAddress: string, tokenAdd
   );
   const { data } = await response.json() as { data: Price };
   const price = data.value;
-  return { balance, price };
+  return { balance: balance.value.uiAmount, price };
 }
 
 export async function getSolBalance(walletAddress: string) {
