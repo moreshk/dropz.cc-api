@@ -2,6 +2,7 @@ import type { Buffer } from 'node:buffer';
 import { PublicKey } from '@solana/web3.js';
 import type { AccountInfo, ParsedAccountData } from '@solana/web3.js';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { z } from 'zod';
 import { connection } from '@/utils/connection';
 import { solToken } from '@/utils/defaultTokens';
 
@@ -76,4 +77,15 @@ export async function getBalance(id: string) {
     console.error(message);
     return null;
   }
+}
+
+export async function getSPLTokenBalance(walletSPLTokenAddress: string) {
+  const address = new PublicKey(walletSPLTokenAddress);
+  const balance = await connection.getTokenAccountBalance(address);
+  return balance;
+}
+
+export async function getSolBalance(walletAddress: string) {
+  const balance = await connection.getBalance(new PublicKey(walletAddress));
+  return balance;
 }
