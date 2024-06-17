@@ -140,7 +140,6 @@ export function errorHandler(error: unknown, req: Request, res: Response<{
   let code: ErrorCode | undefined;
   let message: string | undefined;
   let details: unknown | undefined;
-
   const ip = req.ip;
   const url = req.originalUrl;
   const method = req.method;
