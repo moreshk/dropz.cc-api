@@ -108,7 +108,7 @@ export async function getSPLTokenBalance(walletSPLTokenAddress: string, tokenAdd
 export async function getSolBalance(walletAddress: string) {
   const balance = await connection.getBalance(new PublicKey(walletAddress));
   const response = await fetch(
-      `https://public-api.birdeye.so/defi/price?address=${solToken}`,
+      `https://public-api.birdeye.so/defi/price?address=${solToken.address}`,
       {
         method: 'GET',
         headers: {
