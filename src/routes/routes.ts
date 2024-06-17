@@ -5,6 +5,7 @@ import tokenRoutes from '@/routes/token-routes';
 import auth from '@/routes/auth-routes';
 import widgetRoutes from '@/routes/widget-routes';
 import { createRouter } from '@/utils/create';
+import sdkRouters from '@/routes/sdk-routes';
 
 export default createRouter((router: Router) => {
   router.use('/admin', adminRoutes);
@@ -12,4 +13,5 @@ export default createRouter((router: Router) => {
   router.use('/token', tokenRoutes);
   router.use('/widget', widgetRoutes);
   router.use('/auth', auth);
+  router.use('/sdk', sdkRouters);
 });

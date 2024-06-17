@@ -78,6 +78,9 @@ export const updateWidgetParams = z.object({
 export const widgetIdSchema = z.object({
   body: baseSchema.pick({ id: true }),
 });
+export const widgetIdParamsSchema = z.object({
+  params: baseSchema.pick({ id: true }),
+});
 // Types for widgets - used to type API request params and within Components
 export type Widget = typeof widgets.$inferSelect;
 export type NewWidget = z.infer<typeof insertWidgetSchema>;
