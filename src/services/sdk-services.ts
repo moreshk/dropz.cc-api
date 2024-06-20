@@ -89,20 +89,14 @@ export const splTokenBalanceSchema = z.object({
 
 export async function getSPLTokenBalance(walletSPLTokenAddress: string, tokenAddress: string) {
   const address = new PublicKey(walletSPLTokenAddress);
-  const balance = await connection.getTokenAccountBalance(address);
-  const response = await fetch(
-      `https://public-api.birdeye.so/defi/price?address=${tokenAddress}`,
-      {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'X-API-KEY': '6b234866de0740509b9c0eef83e97119',
-        },
-      },
-  );
-  const { data } = await response.json() as { data: Price };
-  const price = data.value;
-  return { balance: balance.value.uiAmount, price };
+  const price = await getPrice(tokenAddress);
+  try {
+    const balance = await connection.getTokenAccountBalance(address);
+    return { balance: balance.value.uiAmount, price };
+  }
+  catch (e) {
+    return { balance: 0, price };
+  }
 }
 
 export async function getSolBalance(walletAddress: string) {
@@ -122,6 +116,27 @@ export async function getSolBalance(walletAddress: string) {
   return { balance, price };
 }
 
+async function getPrice(tokenAddress: string) {
+  try {
+    const response = await fetch(
+      `https://public-api.birdeye.so/defi/price?address=${tokenAddress}`,
+      {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'X-API-KEY': '6b234866de0740509b9c0eef83e97119',
+        },
+      },
+    );
+    const { data } = await response.json() as { data: Price };
+    const price = data.value;
+    return price;
+  }
+  catch (e) {
+    console.error(e);
+    return 0;
+  }
+}
 interface Price {
   value: number;
   updateUnixTime: number;
