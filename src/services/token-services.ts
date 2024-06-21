@@ -1,8 +1,14 @@
 import process from 'node:process';
+import { PublicKey } from '@solana/web3.js';
 import { and, eq } from 'drizzle-orm';
+// eslint-disable-next-line ts/ban-ts-comment
+// @ts-expect-error
+import { getMint } from '@solana/spl-token';
+import { Metadata, deprecated } from '@metaplex-foundation/mpl-token-metadata';
 import { db } from '@/utils/db';
 import { type NewTokenParams, type UpdateTokenParams, tokens, updateTokenSchema } from '@/schema/tokens';
 import '@/env-config';
+import { connection } from '@/utils/connection';
 
 export async function addToken(newToken: NewTokenParams, userId: string) {
   const [createdToken] = await db.insert(tokens).values({ ...newToken, id: newToken.address, userId }).returning();
@@ -71,34 +77,31 @@ export async function getTokenById(tokenId: string) {
 }
 
 export async function getTokenMetadata(tokenAddress: string) {
-  const response = await fetch(process.env.RPC_URL!, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      jsonrpc: '2.0',
-      id: 'my-id',
-      method: 'getAsset',
-      params: {
-        id: tokenAddress,
-        displayOptions: {
-          showFungible: true,
-        },
-      },
-    }),
-  });
-  const responseData = await response.json() as any;
+  const mintAddress = new PublicKey(tokenAddress);
+  const mintInfo = await getMint(connection, mintAddress);
+  const metadataPda = await deprecated.Metadata.getPDA(mintAddress);
+  const metadataContent = await Metadata.fromAccountAddress(connection, metadataPda);
+  const tokenDetails = await (await fetch(metadataContent.data.uri)).json() as {
+    name: string;
+    symbol: string;
+    description: string;
+    image: string;
+    extensions: {
+      website: string;
+      twitter: string;
+      telegram: string;
+    };
+  };
   const data: {
     name: string;
     symbol: string;
     decimals: number;
     image: string;
   } = {
-    name: responseData.result.content.metadata.name,
-    symbol: responseData.result.content.metadata.symbol,
-    decimals: responseData.result.token_info.decimals,
-    image: responseData.result.content?.links?.image,
+    name: tokenDetails.name,
+    symbol: tokenDetails.symbol,
+    decimals: mintInfo.decimals,
+    image: tokenDetails.image,
   };
   return data;
 }
