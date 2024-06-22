@@ -3,11 +3,12 @@ import { PublicKey } from '@solana/web3.js';
 import type { AccountInfo, ParsedAccountData } from '@solana/web3.js';
 // eslint-disable-next-line ts/ban-ts-comment
 // @ts-expect-error
-import { TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { AccountLayout, TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { z } from 'zod';
 import { connection } from '@/utils/connection';
 import { solToken } from '@/utils/defaultTokens';
 import 'dotenv/config';
+import { redis } from '@/utils/db';
 
 export interface TokenPrice {
   [key: string]: {
@@ -79,20 +80,51 @@ export async function getBalance(id: string) {
 export const splTokenBalanceSchema = z.object({
   params: z.object({
     tokenAddress: z.string(),
+    decimal: z.string(),
     splTokenAddress: z.string(),
   }),
 });
 
-export async function getSPLTokenBalance(walletSPLTokenAddress: string, tokenAddress: string) {
+export async function getSPLTokenBalance(walletSPLTokenAddress: string, tokenAddress: string, decimal: string) {
   const address = new PublicKey(walletSPLTokenAddress);
   const price = await getPrice(tokenAddress);
   try {
-    const balance = await connection.getTokenAccountBalance(address);
-    return { balance: balance.value.uiAmount, price };
+    const owner = await getOwnerProgramId(new PublicKey(tokenAddress));
+    if (owner.equals(TOKEN_PROGRAM_ID)) {
+      const balance = await connection.getTokenAccountBalance(address);
+      return { balance: balance.value.uiAmount, price };
+    }
+    else if (owner.equals(TOKEN_2022_PROGRAM_ID)) {
+      const tokenAccountInfo = await connection.getAccountInfo(new PublicKey('3FqjVFoEevpkAwiQYrXh6koJe8Q9czCgEXyfrrjYKcLY'));
+      if (tokenAccountInfo) {
+        const accountData = AccountLayout.decode(tokenAccountInfo.data);
+        const balance = accountData.amount.toString();
+        return { balance: +balance / (10 ** +decimal), price };
+      }
+      return { balance: 0, price };
+    }
+    else {
+      return { balance: 0, price };
+    }
   }
   catch (e) {
     return { balance: 0, price };
   }
+}
+
+async function getOwnerProgramId(mintAddress: PublicKey): Promise<PublicKey> {
+  const cacheKey = mintAddress.toString();
+  const cachedOwner = await redis.get(cacheKey);
+  if (cachedOwner)
+    return new PublicKey(cachedOwner);
+
+  const accountInfo = await connection.getAccountInfo(mintAddress);
+  if (!accountInfo)
+    throw new Error('Failed to find token mint account');
+  const owner = accountInfo.owner;
+  await redis.set(cacheKey, owner.toString());
+
+  return owner;
 }
 
 export async function getSolBalance(walletAddress: string) {
@@ -125,8 +157,8 @@ async function getPrice(tokenAddress: string) {
       },
     );
     const { data } = await response.json() as { data: Price };
-    const price = data.value;
-    return price;
+    const price = data?.value;
+    return price || 0;
   }
   catch (e) {
     console.error(e);

@@ -23,8 +23,8 @@ export const handelGetBalance = createHandler(widgetIdParamsSchema, async (req, 
 });
 
 export const handelGetSPLTokenBalance = createHandler(splTokenBalanceSchema, async (req, res) => {
-  const { splTokenAddress, tokenAddress } = req.params;
-  const balance = await getSPLTokenBalance(splTokenAddress, tokenAddress);
+  const { splTokenAddress, tokenAddress, decimal } = req.params;
+  const balance = await getSPLTokenBalance(splTokenAddress, tokenAddress, decimal);
   if (!balance)
     throw new BackendError('NOT_FOUND');
   res.status(200).json({ ...balance });
