@@ -1,7 +1,9 @@
 import type { Buffer } from 'node:buffer';
 import { PublicKey } from '@solana/web3.js';
 import type { AccountInfo, ParsedAccountData } from '@solana/web3.js';
-import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
+// eslint-disable-next-line ts/ban-ts-comment
+// @ts-expect-error
+import { TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { z } from 'zod';
 import { connection } from '@/utils/connection';
 import { solToken } from '@/utils/defaultTokens';
@@ -17,25 +19,19 @@ export interface TokenPrice {
 }
 
 export async function getBalance(id: string) {
-  let accounts: {
+  const accounts: {
     pubkey: PublicKey;
     account: AccountInfo<ParsedAccountData | Buffer>;
   }[] = [];
   const walletAddress = new PublicKey(id);
   try {
-    accounts = await connection.getParsedProgramAccounts(TOKEN_PROGRAM_ID, {
-      filters: [
-        {
-          dataSize: 165,
-        },
-        {
-          memcmp: {
-            offset: 32,
-            bytes: walletAddress.toString(),
-          },
-        },
-      ],
+    const tk22 = await connection.getParsedTokenAccountsByOwner(walletAddress, {
+      programId: TOKEN_2022_PROGRAM_ID,
     });
+    const tk = await connection.getParsedTokenAccountsByOwner(walletAddress, {
+      programId: TOKEN_PROGRAM_ID,
+    });
+    accounts.push(...tk22.value, ...tk.value);
   }
   catch (err) {
     const message = (err as Error).message ?? 'Error, please try again';
