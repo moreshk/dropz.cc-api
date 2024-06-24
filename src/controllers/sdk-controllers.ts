@@ -28,8 +28,6 @@ export const handleGetSdkReferralById = createHandler(widgetIdParamsSchema, asyn
 export const handleGetSdkUserReferralById = createHandler(widgetIdParamsSchema, async (req, res) => {
   const { id } = req.params;
   const referral = await getReferralByWalletAddress(id);
-  if (!referral)
-    throw new BackendError('NOT_FOUND');
   res.status(200).json({ referral });
 });
 
