@@ -1,4 +1,3 @@
-import process from 'node:process';
 import { PublicKey } from '@solana/web3.js';
 import { and, eq } from 'drizzle-orm';
 // eslint-disable-next-line ts/ban-ts-comment

@@ -59,6 +59,20 @@ export const insertWidgetParams = z.object({
     }),
 });
 
+export const insertUserWidgetParams = z.object({
+  body: baseSchema
+    .extend({
+      feeWalletAddress: z.string().min(12, 'Please Add Fee wallet'),
+      tokenId: z.string().min(12, 'Please select token'),
+    })
+    .omit({
+      id: true,
+      userId: true,
+      feePercentage: true,
+      website: true,
+    }),
+});
+
 export const updateWidgetSchema = z.object({ body: baseSchema.omit({
   userId: true,
   feePercentage: true,

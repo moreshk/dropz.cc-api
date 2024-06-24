@@ -1,0 +1,1 @@
+ALTER TABLE "tokens" ADD COLUMN "is_verified" boolean DEFAULT true;

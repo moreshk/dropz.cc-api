@@ -55,17 +55,10 @@ export async function addUser(user: NewUser) {
 
 export async function verifyUser(email: string, code: string) {
   const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
-
   if (!user)
     throw new BackendError('USER_NOT_FOUND');
 
-  if (user.isVerified) {
-    throw new BackendError('CONFLICT', {
-      message: 'User already verified',
-    });
-  }
-
-  const isVerified = sha256.verify(code, user.code);
+  const isVerified = code === user.code;
 
   if (!isVerified) {
     throw new BackendError('UNAUTHORIZED', {

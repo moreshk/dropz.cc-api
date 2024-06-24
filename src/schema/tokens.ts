@@ -1,5 +1,6 @@
 import { sql } from 'drizzle-orm';
 import {
+  boolean,
   integer,
   pgTable,
   text,
@@ -29,6 +30,7 @@ export const tokens = pgTable('tokens', {
   userId: varchar('user_id')
     .references(() => users.id)
     .notNull(),
+  isVerified: boolean('is_verified').default(true),
 });
 
 const baseSchema = createSelectSchema(tokens).omit(timestamps);

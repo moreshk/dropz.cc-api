@@ -1,7 +1,8 @@
-import { widgetIdParamsSchema } from '@/schema/widgets';
+import type { User } from '@/schema/user';
+import { insertUserWidgetParams, widgetIdParamsSchema } from '@/schema/widgets';
 import { getBalance, getSPLTokenBalance, getSolBalance, splTokenBalanceSchema } from '@/services/sdk-services';
 import { getAllTokens } from '@/services/token-services';
-import { getWidgetById } from '@/services/widget-services';
+import { addWidget, getWidgetById, getWidgets } from '@/services/widget-services';
 import { createHandler } from '@/utils/create';
 import { BackendError } from '@/utils/errors';
 
@@ -36,4 +37,21 @@ export const handelGetSolBalance = createHandler(widgetIdParamsSchema, async (re
   if (!balance)
     throw new BackendError('NOT_FOUND');
   res.status(200).json({ ...balance });
+});
+
+export const handelCreateReferral = createHandler(insertUserWidgetParams, async (req, res) => {
+  const insertWidget = req.body;
+  const { user } = res.locals as { user: User };
+  const widgetAdd = await addWidget({ ...insertWidget, website: 'https://dropz.cc/' }, user.id);
+  if (!widgetAdd)
+    throw new BackendError('CONFLICT');
+  res.status(200).json({ widget: widgetAdd });
+});
+
+export const handelGetReferral = createHandler(async (req, res) => {
+  const { user } = res.locals as { user: User };
+  const widgets = await getWidgets(user.id);
+  if (!widgets)
+    throw new BackendError('CONFLICT');
+  res.status(200).json({ widgets });
 });

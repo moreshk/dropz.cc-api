@@ -26,7 +26,7 @@ export function VerificationEmail({
   email,
   code,
 }: VerificationEmailProps) {
-  const url = `${baseUrl}/user/verify?email=${email}&code=${code}`;
+  const url = `${baseUrl}/verify?email=${email}&code=${code}`;
 
   return (
     <Html lang="en">

@@ -19,6 +19,8 @@ const configSchema = z.object({
   JWT_SECRET: z.string(),
   RPC_URL: z.string(),
   REDIS_URL: z.string(),
+  RESEND_KEY: z.string(),
+  WEBSITE_URL: z.string(),
 });
 
 try {

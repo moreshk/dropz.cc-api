@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { Buffer } from 'node:buffer';
 import argon2 from 'argon2';
 import {
@@ -15,7 +16,6 @@ import {
   updateUser,
   verifyUser,
 } from '@/services/user-services';
-import { UserVerified } from '@/templates/user-verified';
 import { createHandler } from '@/utils/create';
 import { sendVerificationEmail } from '@/utils/email';
 import { BackendError, getStatusFromErrorCode } from '@/utils/errors';
@@ -40,41 +40,44 @@ export const handleUserLogin = createHandler(loginSchema, async (req, res) => {
 
 export const handleAddUser = createHandler(newUserSchema, async (req, res) => {
   const user = req.body;
-
   const existingUser = await getUserByEmail(user.email);
-
   if (existingUser) {
     throw new BackendError('CONFLICT', {
       message: 'User already exists',
     });
   }
-
-  const { user: addedUser } = await addUser(user);
-
-  res.status(201).json(addedUser);
+  const { user: addedUser, code } = await addUser(user);
+  const status = await sendVerificationEmail(
+    process.env.WEBSITE_URL,
+    addedUser.name,
+    addedUser.email,
+    code,
+  );
+  if (status === 200)
+    res.status(201).json({ success: true });
+  if (status !== 200) {
+    await deleteUser(addedUser.email);
+    throw new BackendError('INTERNAL_ERROR', {
+      message: 'Failed to signup user',
+    });
+  }
 });
 
 export const handleVerifyUser = createHandler(verifyUserSchema, async (req, res) => {
   try {
-    const { email, code } = req.query;
-
+    const { email, code } = req.body;
     await verifyUser(email, code);
     res.status(200).json({ success: true });
   }
   catch (err) {
-    if (err instanceof BackendError) {
+    if (err instanceof BackendError)
       res.status(getStatusFromErrorCode(err.code)).json({ success: true });
-      return;
-    }
-    throw err;
   }
 });
 
 export const handleDeleteUser = createHandler(deleteUserSchema, async (req, res) => {
   const { email } = req.body;
-
   const { user } = res.locals as { user: User };
-
   if (user.email !== email && !user.isAdmin) {
     throw new BackendError('UNAUTHORIZED', {
       message: 'You are not authorized to delete this user',
