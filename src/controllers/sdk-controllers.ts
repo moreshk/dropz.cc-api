@@ -1,5 +1,6 @@
 import type { User } from '@/schema/user';
 import { insertUserWidgetParams, widgetIdParamsSchema } from '@/schema/widgets';
+import { getReferralById, getReferralByWalletAddress } from '@/services/referral-services';
 import { getBalance, getSPLTokenBalance, getSolBalance, splTokenBalanceSchema } from '@/services/sdk-services';
 import { getAllTokens } from '@/services/token-services';
 import { addWidget, getWidgetById, getWidgets } from '@/services/widget-services';
@@ -13,6 +14,23 @@ export const handleGetSdkWidgetById = createHandler(widgetIdParamsSchema, async 
   if (!widget || !tokens)
     throw new BackendError('NOT_FOUND');
   res.status(200).json({ widget, tokens });
+});
+
+export const handleGetSdkReferralById = createHandler(widgetIdParamsSchema, async (req, res) => {
+  const { id } = req.params;
+  const referral = await getReferralById(id);
+  const tokens = await getAllTokens();
+  if (!referral || !tokens)
+    throw new BackendError('NOT_FOUND');
+  res.status(200).json({ referral, tokens });
+});
+
+export const handleGetSdkUserReferralById = createHandler(widgetIdParamsSchema, async (req, res) => {
+  const { id } = req.params;
+  const referral = await getReferralByWalletAddress(id);
+  if (!referral)
+    throw new BackendError('NOT_FOUND');
+  res.status(200).json({ referral });
 });
 
 export const handelGetBalance = createHandler(widgetIdParamsSchema, async (req, res) => {

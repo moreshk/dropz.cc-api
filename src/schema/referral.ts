@@ -1,4 +1,4 @@
-import { sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import {
   integer,
   pgTable,
@@ -25,3 +25,10 @@ export const referral = pgTable('referral', {
     .notNull()
     .default(sql`now()`),
 });
+
+export const referralRelations = relations(referral, ({ one }) => ({
+  token: one(tokens, {
+    fields: [referral.tokenId],
+    references: [tokens.id],
+  }),
+}));
