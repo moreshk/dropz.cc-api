@@ -30,7 +30,7 @@ export const tokens = pgTable('tokens', {
   userId: varchar('user_id')
     .references(() => users.id)
     .notNull(),
-  isVerified: boolean('is_verified').default(true),
+  isVerified: boolean('is_verified').default(false),
 });
 
 const baseSchema = createSelectSchema(tokens).omit(timestamps);

@@ -15,6 +15,13 @@
       "when": 1719201762391,
       "tag": "0001_medical_ghost_rider",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1719208590628,
+      "tag": "0002_youthful_power_man",
+      "breakpoints": true
     }
   ]
 }
