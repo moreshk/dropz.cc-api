@@ -1,5 +1,5 @@
 import type { Router } from 'express';
-import { handleAddUser, handleUserLogin, handleVerifyUser } from '@/controllers/user-controllers';
+import { handleUserLogin, handleVerifyUser } from '@/controllers/user-controllers';
 import { createRouter } from '@/utils/create';
 
 export default createRouter((router: Router) => {
