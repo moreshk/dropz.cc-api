@@ -10,7 +10,7 @@ import '@/env-config';
 import { connection } from '@/utils/connection';
 
 export async function addToken(newToken: NewTokenParams, userId: string) {
-  const [createdToken] = await db.insert(tokens).values({ ...newToken, id: newToken.address, userId }).returning();
+  const [createdToken] = await db.insert(tokens).values({ ...newToken, id: newToken.address, userId, isVerified: true }).returning();
   return createdToken;
 }
 export async function updateToken(tokenId: string, token: UpdateTokenParams, userId: string) {
