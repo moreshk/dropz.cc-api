@@ -11,5 +11,6 @@ export default createRouter((router: Router) => {
   router.put('/update', authenticate({ verifyAdmin: true }), handleUpdateToken);
   router.get('/populate', authenticate({ verifyAdmin: true }), handlePopulateToken);
   router.post('/metadata', authenticate({ verifyAdmin: true }), handelGetTokenMetaData);
+  router.post('/metadata-open-end-point', handelGetTokenMetaData);
   router.get('/:tokenId', authenticate(), handelGetTokenId);
 });
