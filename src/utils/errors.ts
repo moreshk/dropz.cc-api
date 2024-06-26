@@ -143,7 +143,8 @@ export function errorHandler(error: unknown, req: Request, res: Response<{
   const ip = req.ip;
   const url = req.originalUrl;
   const method = req.method;
-  // console.log(error);
+  // eslint-disable-next-line no-console
+  console.log(error);
   if (error instanceof BackendError) {
     message = error.message;
     code = error.code;
