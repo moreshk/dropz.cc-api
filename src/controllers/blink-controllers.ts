@@ -276,13 +276,10 @@ export const handelGetDefaultBuyTransaction = createHandler(z.object({
 }), async (req, res) => {
   const { account } = req.body;
   const { amount } = req.params;
-  if (account) {
-    const url = `https://quote-api.jup.ag/v6/quote?inputMint=${solToken.address}&outputMint=${stableUSDC.address}&amount=${amount}`;
-
+  if (new PublicKey(account).toString() && +amount) {
+    const url = `https://quote-api.jup.ag/v6/quote?inputMint=${solToken.address}&outputMint=${stableUSDC.address}&amount=${+amount * (10 ** stableUSDC.decimals)}`;
     const fromKey = new PublicKey(account);
-    const quoteResponseData = await fetch(
-                `${url}&platformFeeBps=100&slippageBps=4000`,
-    );
+    const quoteResponseData = await fetch(`${url}&platformFeeBps=100&slippageBps=3000`);
     const quoteResponse = await quoteResponseData.json() as QuoteResponse;
     const feeWallet = new PublicKey(
       '9wPKJm8rVXURCRJKEVJqLXW4PZSvLTUXb48t3Fn4Yvyh',
