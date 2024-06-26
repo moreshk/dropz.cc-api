@@ -54,9 +54,9 @@ export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async 
   if (widget) {
     const metadata = {
       icon: 'https://dropz.cc/og-image.png',
-      title: `Buy SOL with ${widget.token.symbol}`,
+      title: `Buy ${widget.token.symbol}`,
       label: widget.token.symbol,
-      description: `Buy ${widget.token.symbol}. Choose a USD amount of ${widget.token.symbol} from the options below, or enter a custom amount.`,
+      description: `Access your wallet and token balances at \n dropz.cc`,
       links: {
         actions: [
           {
