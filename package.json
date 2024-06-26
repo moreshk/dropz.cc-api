@@ -23,6 +23,7 @@
     "@metaplex-foundation/mpl-token-metadata": "^2.0.0",
     "@react-email/components": "0.0.14",
     "@react-email/render": "0.0.12",
+    "@solana/actions": "^1.0.2",
     "@solana/spl-token": "^0.4.6",
     "@solana/web3.js": "^1.93.0",
     "argon2": "0.31.2",
