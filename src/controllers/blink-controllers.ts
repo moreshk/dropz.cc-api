@@ -10,6 +10,7 @@ import '@/env-config';
 import { solToken, stableUSDC } from '@/utils/defaultTokens';
 import { connection } from '@/utils/connection';
 import { BackendError } from '@/utils/errors';
+import { fetchUSDToAnyTokenValue } from '@/services/blink-services';
 
 export const handelDefaultGetBlinkData = createHandler(async (req, res) => {
   const metadata = {
@@ -163,12 +164,13 @@ export const handelGetPaymentTransaction = createHandler(z.object({
   const { account } = req.body;
   if (account) {
     const widget = await getWidgetById(id);
-    if (widget) {
-      const url = `https://quote-api.jup.ag/v6/quote?inputMint=${solToken.address}&outputMint=${widget.token.address}&amount=${amount}`;
 
+    if (widget) {
+      const { amount: tokenAmount } = await fetchUSDToAnyTokenValue(widget.token, amount);
+      const url = `https://quote-api.jup.ag/v6/quote?inputMint=${solToken.address}&outputMint=${widget.token.address}&amount=${Math.floor(+tokenAmount * (10 ** widget.token.decimals))}`;
       const fromKey = new PublicKey(account);
       const quoteResponseData = await fetch(
-                `${url}&platformFeeBps=100&slippageBps=4000`,
+                `${url}&platformFeeBps=100&slippageBps=2000`,
       );
       const quoteResponse = await quoteResponseData.json() as QuoteResponse;
       const feeWallet = new PublicKey(

@@ -5,7 +5,7 @@ import type { Token } from '@/schema/tokens';
 export async function fetchUSDToAnyTokenValue(token: Token, tokenAmount: string) {
   if (+tokenAmount > 0 && stableUSDC.address !== token.address) {
     try {
-      const amount = +tokenAmount * 10 ** stableUSDC.decimals;
+      const amount = +tokenAmount * (10 ** stableUSDC.decimals);
       const url = `https://quote-api.jup.ag/v6/quote?inputMint=${stableUSDC.address}&outputMint=${
         token.address
       }&amount=${amount.toFixed(0)}`;
