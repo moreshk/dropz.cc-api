@@ -22,16 +22,20 @@ export const handelDefaultGetBlinkData = createHandler(async (req, res) => {
     links: {
       actions: [
         {
-          label: '$10',
-          href: `${process.env.API_BASE_URL}/blink/action/buy/default/10`,
-        },
-        {
           label: '$50',
           href: `${process.env.API_BASE_URL}/blink/action/buy/default/50`,
         },
         {
           label: '$100',
           href: `${process.env.API_BASE_URL}/blink/action/buy/default/100`,
+        },
+        {
+          label: '$200',
+          href: `${process.env.API_BASE_URL}/blink/action/buy/default/200`,
+        },
+        {
+          label: '$500',
+          href: `${process.env.API_BASE_URL}/blink/action/buy/default/500`,
         },
         {
           href: `${process.env.API_BASE_URL}/blink/action/buy/default/{amount}`,
