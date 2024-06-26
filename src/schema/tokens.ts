@@ -43,6 +43,7 @@ export const insertTokenParams = z.object({ body: baseSchema
   .omit({
     id: true,
     userId: true,
+    isVerified: true,
   }) });
 
 export const updateTokenSchema = baseSchema;
@@ -52,6 +53,7 @@ export const updateTokenParams = z.object({ body: baseSchema
   })
   .omit({
     userId: true,
+    isVerified: true,
   }) });
 export const tokenIdSchema = z.object({
   body: baseSchema.pick({ id: true }),
