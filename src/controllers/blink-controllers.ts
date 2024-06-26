@@ -1,6 +1,5 @@
 import process from 'node:process';
 import { Buffer } from 'node:buffer';
-import { type ActionGetResponse, createPostResponse } from '@solana/actions';
 import type { QuoteResponse, SwapResponse } from '@jup-ag/api';
 import { AddressLookupTableAccount, PublicKey, SystemProgram, TransactionMessage, VersionedTransaction } from '@solana/web3.js';
 import { z } from 'zod';
@@ -13,7 +12,7 @@ import { connection } from '@/utils/connection';
 import { BackendError } from '@/utils/errors';
 
 export const handelDefaultGetBlinkData = createHandler(async (req, res) => {
-  const metadata: ActionGetResponse = {
+  const metadata = {
     icon: 'https://dropz.cc/og-image.png',
     title: `Buy SOL with USDC`,
     label: 'USDC',
@@ -63,7 +62,7 @@ export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async 
   const { id } = req.params;
   const widget = await getWidgetById(id);
   if (widget) {
-    const metadata: ActionGetResponse = {
+    const metadata = {
       icon: 'https://dropz.cc/og-image.png',
       title: `Buy SOL with ${widget.token.symbol}`,
       label: widget.token.symbol,
@@ -109,7 +108,7 @@ export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async 
     res.status(200).json(metadata);
   }
   else {
-    const metadata: ActionGetResponse = {
+    const metadata = {
       icon: 'https://dropz.cc/og-image.png',
       title: `Buy SOL with USDC`,
       label: 'USDC',

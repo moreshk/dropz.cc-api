@@ -9,7 +9,7 @@ dependencies:
     specifier: ^6.0.23
     version: 6.0.23
   '@metaplex-foundation/mpl-token-metadata':
-    specifier: ^2.0.0
+    specifier: 2.0.0
     version: 2.0.0
   '@react-email/components':
     specifier: 0.0.14
@@ -18,13 +18,13 @@ dependencies:
     specifier: 0.0.12
     version: 0.0.12
   '@solana/actions':
-    specifier: ^1.0.2
+    specifier: 1.0.2
     version: 1.0.2(fastestsmallesttextencoderdecoder@1.0.22)
   '@solana/spl-token':
-    specifier: ^0.4.6
+    specifier: 0.4.6
     version: 0.4.6(@solana/web3.js@1.93.0)(fastestsmallesttextencoderdecoder@1.0.22)
   '@solana/web3.js':
-    specifier: ^1.93.0
+    specifier: 1.93.0
     version: 1.93.0
   argon2:
     specifier: 0.31.2
