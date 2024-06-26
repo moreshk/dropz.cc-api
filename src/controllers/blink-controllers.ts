@@ -56,7 +56,8 @@ export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async 
       icon: 'https://dropz.cc/og-image.png',
       title: `Buy ${widget.token.symbol}`,
       label: widget.token.symbol,
-      description: `Access your wallet and token balances at \n dropz.cc`,
+      description: `Access your wallet and token balances at
+      dropz.cc`,
       links: {
         actions: [
           {
