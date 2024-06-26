@@ -52,7 +52,7 @@ export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async 
         ],
       },
     };
-    res.status(200).json({ ...metadata });
+    res.status(200).json(metadata);
   }
   else {
     const metadata: ActionGetResponse = {
@@ -98,6 +98,6 @@ export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async 
         ],
       },
     };
-    res.status(200).json({ ...metadata });
+    res.status(200).json(metadata);
   }
 });
