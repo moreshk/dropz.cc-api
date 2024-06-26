@@ -20,6 +20,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@jup-ag/api": "^6.0.23",
     "@metaplex-foundation/mpl-token-metadata": "^2.0.0",
     "@react-email/components": "0.0.14",
     "@react-email/render": "0.0.12",
