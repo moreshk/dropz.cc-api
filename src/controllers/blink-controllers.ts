@@ -134,7 +134,7 @@ export const handelGetPaymentTransaction = createHandler(z.object({
 
     if (widget) {
       const { amount: sendAmount } = await fetchUSDToAnyTokenValue(solToken, amount);
-      const swapAmount = Number.parseFloat(sendAmount) * (10 ** widget.token.decimals);
+      const swapAmount = Number.parseFloat(sendAmount) * (10 ** solToken.decimals);
       const url = `https://quote-api.jup.ag/v6/quote?inputMint=${solToken.address}&outputMint=${widget.token.address}&amount=${swapAmount}`;
       const fromKey = new PublicKey(account);
       const quoteResponseData = await fetch(`${url}&platformFeeBps=100&slippageBps=2000`);
