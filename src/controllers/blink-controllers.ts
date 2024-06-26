@@ -3,6 +3,7 @@ import type { ActionGetResponse } from '@solana/actions';
 import { widgetIdParamsSchema } from '@/schema/widgets';
 import { createHandler } from '@/utils/create';
 import { getWidgetById } from '@/services/widget-services';
+import '@/env-config';
 
 export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async (req, res) => {
   const { id } = req.body;
