@@ -6,7 +6,7 @@ import { getWidgetById } from '@/services/widget-services';
 import '@/env-config';
 
 export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   const widget = await getWidgetById(id);
   if (widget) {
     const metadata: ActionGetResponse = {
