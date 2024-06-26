@@ -133,12 +133,11 @@ export const handelGetPaymentTransaction = createHandler(z.object({
     const widget = await getWidgetById(id);
 
     if (widget) {
-      const { amount: tokenAmount } = await fetchUSDToAnyTokenValue(widget.token, amount);
-      const url = `https://quote-api.jup.ag/v6/quote?inputMint=${solToken.address}&outputMint=${widget.token.address}&amount=${Math.floor(+tokenAmount * (10 ** widget.token.decimals))}`;
+      const { amount: sendAmount } = await fetchUSDToAnyTokenValue(widget.token, amount);
+      const swapAmount = Number.parseFloat(sendAmount) * (10 ** widget.token.decimals);
+      const url = `https://quote-api.jup.ag/v6/quote?inputMint=${solToken.address}&outputMint=${widget.token.address}&amount=${swapAmount}`;
       const fromKey = new PublicKey(account);
-      const quoteResponseData = await fetch(
-                `${url}&platformFeeBps=100&slippageBps=2000`,
-      );
+      const quoteResponseData = await fetch(`${url}&platformFeeBps=100&slippageBps=2000`);
       const quoteResponse = await quoteResponseData.json() as QuoteResponse;
       const feeWallet = new PublicKey(
         '9wPKJm8rVXURCRJKEVJqLXW4PZSvLTUXb48t3Fn4Yvyh',
@@ -150,12 +149,11 @@ export const handelGetPaymentTransaction = createHandler(z.object({
         },
         body: JSON.stringify({
           quoteResponse,
-          userPublicKey: fromKey,
+          userPublicKey: fromKey.toString(),
           wrapAndUnwrapSol: true,
           computeUnitPriceMicroLamports: 1000000000,
         }),
       });
-
       const { swapTransaction } = await swapTransactionData.json() as SwapResponse;
       const swapTransactionBuf = Buffer.from(swapTransaction, 'base64');
       const transaction
