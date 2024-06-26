@@ -11,8 +11,10 @@ export const solToken = {
   userId: 'l9yf9yr28os1oiofqgfpg',
   createdAt: new Date('2024-05-10T07:50:52.000Z'),
   updatedAt: new Date('2024-05-10T07:51:03.000Z'),
+  isVerified: true,
 };
 export const stableUSDC = {
+  isVerified: true,
   id: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
   name: 'USD Coin',
   symbol: 'USDC',
