@@ -271,7 +271,8 @@ export const handelGetPaymentTransaction = createHandler(z.object({
 });
 
 export const handelGetDefaultBuyTransaction = createHandler(z.object({
-  body: z.object({ account: z.string(), params: z.object({ amount: z.string() }) }),
+  body: z.object({ account: z.string() }),
+  params: z.object({ amount: z.string() }),
 }), async (req, res) => {
   const { account } = req.body;
   const { amount } = req.params;
