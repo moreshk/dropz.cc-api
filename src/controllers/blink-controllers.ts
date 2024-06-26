@@ -41,16 +41,16 @@ export const handelDefaultGetBlinkData = createHandler(async (req, res) => {
             },
           ],
         },
-        {
-          href: `${process.env.API_BASE_URL}/blink/action/sell/default/{sellamount}`,
-          label: `Sell USDC`,
-          parameters: [
-            {
-              name: 'sellamount',
-              label: 'Enter a custom USD amount',
-            },
-          ],
-        },
+        // {
+        //   href: `${process.env.API_BASE_URL}/blink/action/sell/default/{sellamount}`,
+        //   label: `Sell USDC`,
+        //   parameters: [
+        //     {
+        //       name: 'sellamount',
+        //       label: 'Enter a custom USD amount',
+        //     },
+        //   ],
+        // },
 
       ],
     },
@@ -91,16 +91,16 @@ export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async 
               },
             ],
           },
-          {
-            href: `${process.env.API_BASE_URL}/blink/action/sell/${id}/{sellamount}`,
-            label: `Sell ${widget.token.symbol}`,
-            parameters: [
-              {
-                name: 'sellamount',
-                label: 'Enter a custom USD amount',
-              },
-            ],
-          },
+          // {
+          //   href: `${process.env.API_BASE_URL}/blink/action/sell/${id}/{sellamount}`,
+          //   label: `Sell ${widget.token.symbol}`,
+          //   parameters: [
+          //     {
+          //       name: 'sellamount',
+          //       label: 'Enter a custom USD amount',
+          //     },
+          //   ],
+          // },
 
         ],
       },
@@ -137,16 +137,16 @@ export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async 
               },
             ],
           },
-          {
-            href: `${process.env.API_BASE_URL}/blink/action/sell/{sellamount}`,
-            label: `Sell USDC`,
-            parameters: [
-              {
-                name: 'sellamount',
-                label: 'Enter a custom USD amount',
-              },
-            ],
-          },
+          // {
+          //   href: `${process.env.API_BASE_URL}/blink/action/sell/{sellamount}`,
+          //   label: `Sell USDC`,
+          //   parameters: [
+          //     {
+          //       name: 'sellamount',
+          //       label: 'Enter a custom USD amount',
+          //     },
+          //   ],
+          // },
 
         ],
       },
