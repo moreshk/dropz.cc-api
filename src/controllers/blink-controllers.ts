@@ -17,8 +17,7 @@ export const handelDefaultGetBlinkData = createHandler(async (req, res) => {
     icon: 'https://dropz.cc/og-image.png',
     title: `Buy USDC`,
     label: 'USDC',
-    description: `<p>Access your wallet and token balances at
-      dropz.cc<p/>`,
+    description: `Access your wallet and token balances at\ndropz.cc`,
     links: {
       actions: [
         {
