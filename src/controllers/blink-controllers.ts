@@ -73,6 +73,18 @@ export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async 
             href: `${process.env.API_BASE_URL}/blink/action/buy/${id}/100`,
           },
           {
+            label: '$200',
+            href: `${process.env.API_BASE_URL}/blink/action/buy/${id}/200`,
+          },
+          {
+            label: '$500',
+            href: `${process.env.API_BASE_URL}/blink/action/buy/${id}/500`,
+          },
+          {
+            label: '$1000',
+            href: `${process.env.API_BASE_URL}/blink/action/buy/${id}/1000`,
+          },
+          {
             href: `${process.env.API_BASE_URL}/blink/action/buy/${id}/{amount}`,
             label: `Buy ${widget.token.symbol}`,
             parameters: [
