@@ -15,9 +15,10 @@ import { fetchUSDToAnyTokenValue } from '@/services/blink-services';
 export const handelDefaultGetBlinkData = createHandler(async (req, res) => {
   const metadata = {
     icon: 'https://dropz.cc/og-image.png',
-    title: `Buy SOL with USDC`,
+    title: `Buy USDC`,
     label: 'USDC',
-    description: `Buy USDC. Choose a USD amount of USDC from the options below, or enter a custom amount.`,
+    description: `<p>Access your wallet and token balances at
+      dropz.cc<p/>`,
     links: {
       actions: [
         {
@@ -30,7 +31,7 @@ export const handelDefaultGetBlinkData = createHandler(async (req, res) => {
         },
         {
           label: '$100',
-          href: `${process.env.API_BASE_URL}/blink/action/buy/default100`,
+          href: `${process.env.API_BASE_URL}/blink/action/buy/default/100`,
         },
         {
           href: `${process.env.API_BASE_URL}/blink/action/buy/default/{amount}`,
