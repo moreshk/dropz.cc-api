@@ -14,7 +14,7 @@ import { fetchUSDToAnyTokenValue } from '@/services/blink-services';
 
 export const handelDefaultGetBlinkData = createHandler(async (req, res) => {
   const metadata = {
-    icon: 'https://dropz.cc/og-image.png',
+    icon: `https://dropz.cc/api/og?widgetId=wget_3fgvshql4wnk70st17031`,
     title: `Buy USDC`,
     label: 'USDC',
     description: `Access your wallet and token balances at\ndropz.cc`,
@@ -57,7 +57,7 @@ export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async 
   const widget = await getWidgetById(id);
   if (widget) {
     const metadata = {
-      icon: 'https://dropz.cc/og-image.png',
+      icon: `https://dropz.cc/api/og?widgetId=${id}`,
       title: `Buy ${widget.token.symbol}`,
       label: widget.token.symbol,
       description: `Access your wallet and token balances at
