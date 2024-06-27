@@ -57,11 +57,10 @@ export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async 
   const widget = await getWidgetById(id);
   if (widget) {
     const metadata = {
-      icon: `https://dropz.cc/api/og?widgetId=${id}`,
+      icon: `https://dropz.cc/api/og?widgetId=${id}&time=${Date.now()}`,
       title: `Buy ${widget.token.symbol}`,
       label: widget.token.symbol,
-      description: `Access your wallet and token balances at
-      dropz.cc`,
+      description: `Access your wallet and token balances at dropz.cc`,
       links: {
         actions: [
           {
@@ -98,7 +97,7 @@ export const handelGetBlinkMetaData = createHandler(widgetIdParamsSchema, async 
   else {
     const metadata = {
       icon: 'https://dropz.cc/og-image.png',
-      title: `Buy SOL with USDC`,
+      title: `Buy USDC`,
       label: 'USDC',
       description: `Buy USDC. Choose a USD amount of USDC from the options below, or enter a custom amount.`,
       links: {
