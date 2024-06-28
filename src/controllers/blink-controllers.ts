@@ -7,7 +7,7 @@ import { widgetIdParamsSchema } from '@/schema/widgets';
 import { createHandler } from '@/utils/create';
 import { getWidgetById } from '@/services/widget-services';
 import '@/env-config';
-import { solToken, stableUSDC } from '@/utils/defaultTokens';
+import { solToken } from '@/utils/defaultTokens';
 import { connection } from '@/utils/connection';
 import { BackendError } from '@/utils/errors';
 import { fetchUSDToAnyTokenValue } from '@/services/blink-services';
@@ -97,7 +97,7 @@ export const handelGetRefBlinkMetaData = createHandler(widgetIdParamsSchema, asy
   const widget = await getReferralById(id);
   if (widget) {
     const metadata = {
-      icon: `https://dropz.cc/api/og?widgetId=${id}&time=${Date.now()}`,
+      icon: `https://dropz.cc/api/ref-og?widgetId=${id}&time=${Date.now()}`,
       title: `Buy ${widget.token.symbol}`,
       label: widget.token.symbol,
       description: `Access your wallet and token balances at dropz.cc`,
