@@ -10,6 +10,15 @@ export async function getReferralById(referralId: string) {
     },
   });
 }
+
+export async function getReferrals() {
+  return await db.query.referral.findMany({
+    with: {
+      token: true,
+    },
+  });
+}
+
 export async function getReferralByWalletAddress(walletAddress: string) {
   return await db.query.referral.findFirst({
     where: eq(referral.feeWalletAddress, walletAddress),

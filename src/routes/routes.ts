@@ -7,6 +7,7 @@ import widgetRoutes from '@/routes/widget-routes';
 import { createRouter } from '@/utils/create';
 import sdkRouters from '@/routes/sdk-routes';
 import blinkRoutes from '@/routes/blink-routes';
+import referralRouter from '@/routes/referral-routes';
 
 export default createRouter((router: Router) => {
   router.use('/admin', adminRoutes);
@@ -16,4 +17,5 @@ export default createRouter((router: Router) => {
   router.use('/auth', auth);
   router.use('/sdk', sdkRouters);
   router.use('/blink', blinkRoutes);
+  router.use('/referral', referralRouter);
 });
