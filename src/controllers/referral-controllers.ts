@@ -1,4 +1,4 @@
-import { getReferralById, getReferrals } from '@/services/referral-services';
+import { getReferrals } from '@/services/referral-services';
 import { createHandler } from '@/utils/create';
 import { BackendError } from '@/utils/errors';
 

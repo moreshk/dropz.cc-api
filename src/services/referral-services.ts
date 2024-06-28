@@ -20,7 +20,7 @@ export async function getReferrals() {
 }
 
 export async function getReferralByWalletAddress(walletAddress: string) {
-  return await db.query.referral.findFirst({
+  return await db.query.referral.findMany({
     where: eq(referral.feeWalletAddress, walletAddress),
     with: {
       token: true,
