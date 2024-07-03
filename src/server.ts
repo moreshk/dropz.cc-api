@@ -1,9 +1,11 @@
 import process from 'node:process';
+import { createServer } from 'node:http';
 import consola from 'consola';
 import cors from 'cors';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import { mw as requestIp } from 'request-ip';
+import { Server } from 'socket.io';
 import { logger } from './utils/logger';
 import { errorHandler, handle404Error } from '@/utils/errors';
 import routes from '@/routes/routes';
@@ -12,6 +14,13 @@ import '@/utils/env';
 const { PORT } = process.env;
 
 const app = express();
+const server = createServer(app); // Create a server using the http module
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+});
 
 app.use(express.json());
 app.use(cors());
@@ -50,6 +59,16 @@ app.use('/', routes);
 app.all('*', handle404Error);
 
 app.use(errorHandler);
+io.on('connection', (socket) => {
+  consola.info('A user connected');
+  socket.on('disconnect', () => {
+    consola.info('A user disconnected');
+  });
+
+  socket.on('example_event', (data) => {
+    consola.info('Received example_event with data:', data);
+  });
+});
 
 app.listen(PORT, () => {
   consola.info(`Server running at http://localhost:${PORT}`);

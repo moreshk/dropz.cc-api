@@ -6,6 +6,7 @@ import * as users from '@/schema/user';
 import * as tokens from '@/schema/tokens';
 import * as widgets from '@/schema/widgets';
 import * as referral from '@/schema/referral';
+import * as leaderboard from '@/schema/leaderboard';
 import '@/env-config';
 
 export const db = drizzle(postgres(process.env.DB_URL), { schema: {
@@ -13,6 +14,7 @@ export const db = drizzle(postgres(process.env.DB_URL), { schema: {
   ...tokens,
   ...widgets,
   ...referral,
+  ...leaderboard,
 } });
 
 const parsedUrl = new URL(process.env.REDIS_URL);

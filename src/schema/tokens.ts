@@ -31,6 +31,7 @@ export const tokens = pgTable('tokens', {
     .references(() => users.id)
     .notNull(),
   isVerified: boolean('is_verified').default(false),
+  isPumpFun: boolean('is_pumpfun').default(false),
 });
 
 const baseSchema = createSelectSchema(tokens).omit(timestamps);
@@ -44,6 +45,7 @@ export const insertTokenParams = z.object({ body: baseSchema
     id: true,
     userId: true,
     isVerified: true,
+    isPumpFun: true,
   }) });
 
 export const updateTokenSchema = baseSchema;
@@ -54,6 +56,7 @@ export const updateTokenParams = z.object({ body: baseSchema
   .omit({
     userId: true,
     isVerified: true,
+    isPumpFun: true,
   }) });
 export const tokenIdSchema = z.object({
   body: baseSchema.pick({ id: true }),
