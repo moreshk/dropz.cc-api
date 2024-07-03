@@ -63,8 +63,12 @@ export async function getUsersTokens(userId: string) {
   return await db.select().from(tokens).where(eq(tokens.userId, userId!));
 }
 
-export async function getAllTokens() {
+export async function getAllTokensList() {
   return await db.select().from(tokens);
+}
+
+export async function getSwapTokens() {
+  return await db.select().from(tokens).where(eq(tokens.isPumpFun, false));
 }
 
 export async function getTokenById(tokenId: string) {

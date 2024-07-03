@@ -1,6 +1,6 @@
 import { insertTokenParams, tokenIdSchema, updateTokenParams } from '@/schema/tokens';
 import type { User } from '@/schema/user';
-import { addToken, deleteToken, getAllTokens, getTokenById, getTokenMetadata, getUsersTokens, populateToken, updateToken } from '@/services/token-services';
+import { addToken, deleteToken, getSwapTokens, getTokenById, getTokenMetadata, getUsersTokens, populateToken, updateToken } from '@/services/token-services';
 import { createHandler } from '@/utils/create';
 import { BackendError } from '@/utils/errors';
 
@@ -40,7 +40,7 @@ export const handelGetTokenMetaData = createHandler(tokenIdSchema, async (req, r
 });
 
 export const handleGetAllToken = createHandler(async (req, res) => {
-  const tokens = await getAllTokens();
+  const tokens = await getSwapTokens();
   res.status(200).json({ tokens });
 });
 
