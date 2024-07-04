@@ -32,7 +32,7 @@ export const tokens = pgTable('tokens', {
     .notNull(),
   isVerified: boolean('is_verified').default(false),
   isPumpFun: boolean('is_pumpfun').default(false),
-  isMoonShoot: boolean('is_moonshoot').default(false),
+  isMoonShot: boolean('is_moonshot').default(false),
 });
 
 const baseSchema = createSelectSchema(tokens).omit(timestamps);

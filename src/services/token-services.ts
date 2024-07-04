@@ -68,7 +68,7 @@ export async function getAllTokensList() {
 }
 
 export async function getSwapTokens() {
-  return await db.select().from(tokens).where(and(eq(tokens.isPumpFun, false), eq(tokens.isMoonShoot, false)));
+  return await db.select().from(tokens).where(and(eq(tokens.isPumpFun, false), eq(tokens.isMoonShot, false)));
 }
 
 export async function getTokenById(tokenId: string) {
