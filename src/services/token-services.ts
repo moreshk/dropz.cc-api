@@ -22,10 +22,10 @@ export async function updateToken(tokenId: string, token: UpdateTokenParams, use
   return updatedToken;
 }
 
-export async function deleteToken(tokenId: string, userId: string) {
+export async function deleteToken(tokenId: string) {
   const [t] = await db
     .delete(tokens)
-    .where(and(eq(tokens.id, tokenId), eq(tokens.userId, userId)))
+    .where(and(eq(tokens.id, tokenId)))
     .returning();
   return t;
 }

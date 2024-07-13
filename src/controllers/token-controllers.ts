@@ -62,9 +62,7 @@ export const handlePopulateToken = createHandler(async (req, res) => {
 
 export const handelDeleteToken = createHandler(tokenIdSchema, async (req, res) => {
   const { id } = req.body;
-  const { user } = res.locals as { user: User };
-
-  const token = await deleteToken(id, user.id);
+  const token = await deleteToken(id);
   if (!token)
     throw new BackendError('NOT_FOUND');
   res.status(200).json({ token });
