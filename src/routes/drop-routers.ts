@@ -1,6 +1,6 @@
 import type { Router } from 'express';
 import { createRouter } from '@/utils/create';
-import { handleAddDrop, handleDeleteDrop, handleGetAllDrop } from '@/controllers/drop-controllers';
+import { handleAddDrop, handleDeleteDrop, handleGetAllDrop, handleUpdateDrop } from '@/controllers/drop-controllers';
 import { authenticate } from '@/middlewares/auth';
 
 export default createRouter((router: Router) => {
@@ -8,5 +8,10 @@ export default createRouter((router: Router) => {
     verifyAdmin: true,
   }), handleAddDrop);
   router.get('/all', handleGetAllDrop);
-  router.post('/delete', handleDeleteDrop);
+  router.post('/edit', authenticate({
+    verifyAdmin: true,
+  }), handleUpdateDrop);
+  router.post('/delete', authenticate({
+    verifyAdmin: true,
+  }), handleDeleteDrop);
 });

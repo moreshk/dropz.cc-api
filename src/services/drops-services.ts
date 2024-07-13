@@ -7,6 +7,14 @@ export async function addDrop(tokenId: string, tokens: number) {
   const [createDrop] = await db.insert(drops).values({ tokenId, tokens, listing: true }).returning();
   return createDrop;
 }
+export async function updateDrop(tokenId: string, tokens: number, id: string) {
+  const [updatedDrop] = await db
+    .update(drops)
+    .set({ tokenId, tokens })
+    .where(eq(drops.id, id))
+    .returning();
+  return updatedDrop;
+}
 
 export async function getAllDrops() {
   const dropsList = await db.query.drops.findMany({
