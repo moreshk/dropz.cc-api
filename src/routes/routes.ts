@@ -9,6 +9,7 @@ import sdkRouters from '@/routes/sdk-routes';
 import blinkRoutes from '@/routes/blink-routes';
 import referralRouter from '@/routes/referral-routes';
 import leaderBoardRouter from '@/routes/leaderboard-routes';
+import dropRouters from '@/routes/drop-routers';
 
 export default createRouter((router: Router) => {
   router.use('/admin', adminRoutes);
@@ -20,4 +21,5 @@ export default createRouter((router: Router) => {
   router.use('/blink', blinkRoutes);
   router.use('/referral', referralRouter);
   router.use('/leaderBoard', leaderBoardRouter);
+  router.use('/drop', dropRouters);
 });
