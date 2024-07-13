@@ -9,7 +9,11 @@ export async function addDrop(tokenId: string, tokens: number) {
 }
 
 export async function getAllDrops() {
-  const dropsList = await db.select().from(drops);
+  const dropsList = await db.query.drops.findMany({
+    with: {
+      token: true,
+    },
+  }); ;
   return dropsList;
 }
 
