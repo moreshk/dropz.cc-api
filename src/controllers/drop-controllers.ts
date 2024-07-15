@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { addDrop, deleteDrop, getAllDrops, updateDrop } from '@/services/drops-services';
+import { addDrop, deleteDrop, getAllDrops, getDropDetailsById, updateDrop } from '@/services/drops-services';
 import { createHandler } from '@/utils/create';
 import { BackendError } from '@/utils/errors';
 
@@ -19,6 +19,11 @@ export const dropUpdateSchema = z.object({
 
 export const dropDeleteSchema = z.object({
   body: z.object({
+    id: z.string(),
+  }),
+});
+export const dropDetailsSchema = z.object({
+  params: z.object({
     id: z.string(),
   }),
 });
@@ -44,6 +49,13 @@ export const handleGetAllDrop = createHandler(async (req, res) => {
   if (!drops)
     throw new BackendError('NOT_FOUND');
   res.status(200).json({ drops });
+});
+export const handleDropDetails = createHandler(dropDetailsSchema, async (req, res) => {
+  const { id } = req.params;
+  const drop = await getDropDetailsById(id);
+  if (!drop)
+    throw new BackendError('NOT_FOUND');
+  res.status(200).json({ drop });
 });
 
 export const handleDeleteDrop = createHandler(dropDeleteSchema, async (req, res) => {

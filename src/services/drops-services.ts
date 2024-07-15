@@ -7,6 +7,7 @@ export async function addDrop(tokenId: string, tokens: number) {
   const [createDrop] = await db.insert(drops).values({ tokenId, tokens, listing: true }).returning();
   return createDrop;
 }
+
 export async function updateDrop(tokenId: string, tokens: number, id: string) {
   const [updatedDrop] = await db
     .update(drops)
@@ -16,12 +17,21 @@ export async function updateDrop(tokenId: string, tokens: number, id: string) {
   return updatedDrop;
 }
 
+export async function getDropDetailsById(id: string) {
+  return await db.query.drops.findFirst({
+    where: eq(drops.id, id),
+    with: {
+      token: true,
+    },
+  });
+}
+
 export async function getAllDrops() {
   const dropsList = await db.query.drops.findMany({
     with: {
       token: true,
     },
-  }); ;
+  });
   return dropsList;
 }
 
