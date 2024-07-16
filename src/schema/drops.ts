@@ -23,6 +23,12 @@ export const drops = pgTable('drops', {
     .default(sql`now()`),
   tokens: integer('tokens').default(0),
   listing: boolean('listing').default(true),
+  maxDuration: integer('maxDuration').default(86400),
+  startTime: timestamp('start_time')
+    .notNull()
+    .default(sql`now()`),
+  winners: integer('winners').default(11),
+  exhausted: boolean('exhausted').default(false),
 });
 
 export const dropsRelations = relations(drops, ({ one }) => ({

@@ -3,15 +3,15 @@ import { db } from '@/utils/db';
 import '@/env-config';
 import { drops } from '@/schema/drops';
 
-export async function addDrop(tokenId: string, tokens: number) {
-  const [createDrop] = await db.insert(drops).values({ tokenId, tokens, listing: true }).returning();
+export async function addDrop(tokenId: string, tokens: number, exhausted: boolean, maxDuration: number, startTime: Date, winners: number) {
+  const [createDrop] = await db.insert(drops).values({ tokenId, tokens, listing: true, exhausted, maxDuration, startTime, winners }).returning();
   return createDrop;
 }
 
-export async function updateDrop(tokenId: string, tokens: number, id: string) {
+export async function updateDrop(tokenId: string, tokens: number, id: string, exhausted: boolean, maxDuration: number, startTime: Date, winners: number) {
   const [updatedDrop] = await db
     .update(drops)
-    .set({ tokenId, tokens })
+    .set({ tokenId, tokens, exhausted, maxDuration, startTime, winners })
     .where(eq(drops.id, id))
     .returning();
   return updatedDrop;

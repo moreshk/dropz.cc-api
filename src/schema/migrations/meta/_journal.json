@@ -71,6 +71,20 @@
       "when": 1720776311892,
       "tag": "0009_condemned_korath",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1721114610358,
+      "tag": "0010_quiet_siren",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1721115075621,
+      "tag": "0011_light_sentinel",
+      "breakpoints": true
     }
   ]
 }
