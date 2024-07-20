@@ -27,7 +27,7 @@ export const drops = pgTable('drops', {
   startTime: timestamp('start_time')
     .notNull()
     .default(sql`now()`),
-  winners: integer('winners').default(11),
+  winners: integer('winners').default(0),
   exhausted: boolean('exhausted').default(false),
 });
 
