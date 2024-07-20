@@ -1,0 +1,1 @@
+ALTER TABLE "drops" ALTER COLUMN "winners" SET DEFAULT 0;
