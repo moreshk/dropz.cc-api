@@ -19,6 +19,7 @@ export const dropUpdateSchema = z.object({
     tokenId: z.string(),
     exhausted: z.boolean(),
     maxDuration: z.number(),
+    winner: z.number(),
   }),
 });
 
@@ -42,8 +43,8 @@ export const handleAddDrop = createHandler(dropAddSchema, async (req, res) => {
 });
 
 export const handleUpdateDrop = createHandler(dropUpdateSchema, async (req, res) => {
-  const { id, tokens, tokenId, exhausted, maxDuration } = req.body;
-  const drop = await updateDrop(tokenId, tokens, id, exhausted, maxDuration);
+  const { id, tokens, tokenId, exhausted, maxDuration, winner } = req.body;
+  const drop = await updateDrop(tokenId, tokens, id, exhausted, maxDuration, winner);
   if (!drop)
     throw new BackendError('NOT_FOUND');
   res.status(200).json({ drop });

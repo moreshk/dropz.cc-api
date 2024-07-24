@@ -8,10 +8,10 @@ export async function addDrop(tokenId: string, tokens: number, exhausted: boolea
   return createDrop;
 }
 
-export async function updateDrop(tokenId: string, tokens: number, id: string, exhausted: boolean, maxDuration: number) {
+export async function updateDrop(tokenId: string, tokens: number, id: string, exhausted: boolean, maxDuration: number, winner: number) {
   const [updatedDrop] = await db
     .update(drops)
-    .set({ tokenId, tokens, exhausted, maxDuration })
+    .set({ tokenId, tokens, exhausted, maxDuration, winners: winner })
     .where(eq(drops.id, id))
     .returning();
   return updatedDrop;
