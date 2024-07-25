@@ -3,8 +3,8 @@ import { db } from '@/utils/db';
 import '@/env-config';
 import { drops } from '@/schema/drops';
 
-export async function addDrop(tokenId: string, tokens: number, exhausted: boolean, maxDuration: number) {
-  const [createDrop] = await db.insert(drops).values({ tokenId, tokens, listing: true, exhausted, maxDuration }).returning();
+export async function addDrop(tokenId: string, tokens: number, exhausted: boolean, maxDuration: number, winners: number) {
+  const [createDrop] = await db.insert(drops).values({ tokenId, tokens, listing: true, exhausted, winners, maxDuration }).returning();
   return createDrop;
 }
 
