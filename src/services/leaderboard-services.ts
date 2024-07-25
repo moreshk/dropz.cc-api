@@ -7,7 +7,7 @@ const PAGE_SIZE = 10;
 export async function getLeaderBoard(page = 1) {
   const offset = (page - 1) * PAGE_SIZE;
   const leaderboardItems = await db.query.leaderboard.findMany({
-    orderBy: [desc(leaderboard.updatedAt)],
+    orderBy: [desc(leaderboard.points)],
     with: {
       token: true,
     },
